@@ -1,8 +1,8 @@
 package com.supplyboost.Exercises.StackAndQueues;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
 
 public class _8_InfixToPostfix {
 
