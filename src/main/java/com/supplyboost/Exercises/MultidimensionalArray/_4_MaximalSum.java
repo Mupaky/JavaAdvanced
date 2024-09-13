@@ -1,6 +1,5 @@
 package com.supplyboost.Exercises.MultidimensionalArray;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class _4_MaximalSum {
