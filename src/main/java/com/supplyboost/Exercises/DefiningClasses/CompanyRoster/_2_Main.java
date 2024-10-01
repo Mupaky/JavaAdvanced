@@ -1,9 +1,7 @@
 package com.supplyboost.Exercises.DefiningClasses.CompanyRoster;
 
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class _2_Main {
 
@@ -12,35 +10,32 @@ public class _2_Main {
 
         int maxReadLines = Integer.parseInt(scanner.nextLine());
 
-        Set<Department> departments = new HashSet<>();
-
+        Map<String, Department> departments = new HashMap<>();
 
 
         while (maxReadLines > 0){
             String[] info = scanner.nextLine().split("\\s");
             String departmentName = info[3];
-            String email = "n/a";
-            int age = -1;
-            if(info.length == 5){
-                email = info[4];
+            if (!departments.containsKey(departmentName)) {
+                departments.put(departmentName, new Department(departmentName));
             }
-            if(info.length > 5){
-                age = Integer.parseInt(info[5]);
-            }
-            boolean found = false;
-            for (Department department : departments) {
-                if (department.getName().equals(departmentName)) {
-                    department.getEmployees().add(new Employee(info[0], Double.parseDouble(info[1]), info[2], email, age));
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-
-            }
-
+            departments.get(departmentName).getEmployees().add(Employee.createNewEmployee(info));
             maxReadLines--;
         }
-        departments.forEach(department -> System.out.println(department.getName()));
+
+        Department bestSalarayForDepartment = null;
+        double maxAverageSalary = 0;
+        for (Department department : departments.values()){
+            if(maxAverageSalary < department.averageSalary()){
+                bestSalarayForDepartment = department;
+                maxAverageSalary = department.averageSalary();
+            }
+        }
+        assert bestSalarayForDepartment != null;
+        System.out.printf("Highest Average Salary: %s\n", bestSalarayForDepartment.getName());
+        bestSalarayForDepartment.getEmployees().sort(Comparator.comparing(Employee::getSalary).reversed());
+        bestSalarayForDepartment.getEmployees()
+                .forEach(employee -> System.out.printf("%s %.2f %s %d\n", employee.getName(), employee.getSalary(), employee.getEmail(), employee.getAge()));
+
     }
 }
